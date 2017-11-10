@@ -24,7 +24,7 @@ public class EnemySpawner : MonoBehaviour
         {
             BuildManager.shouldSpawn = false;
             GameObject personToBuild = buildManager.enemies[(int)Random.Range(0,3)];
-            destination = transform.GetChild(0);
+            destination = transform.parent.GetChild(1).GetChild(0).transform;
             var newObject = Instantiate(personToBuild, transform.position, transform.rotation);
             newObject.transform.parent = gameObject.transform;
         }

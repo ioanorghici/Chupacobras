@@ -9,6 +9,7 @@ public class Spawner : MonoBehaviour {
     private bool mouseOver = false;
     public static Transform destination;
     BuildManager buildManager;
+    public int health = 100;
 
     // Use this for initialization
     void Start () {
@@ -25,9 +26,9 @@ public class Spawner : MonoBehaviour {
     {
         if (mouseOver == false)
             return;
-        if (buildManager.getToBuild() == null)
-            return;
         GameObject personToBuild = buildManager.getToBuild();
+        if (personToBuild == null)
+            return;
         destination = transform.GetChild(0);
         var newObject = Instantiate(personToBuild, transform.position, transform.rotation);
         newObject.transform.parent = gameObject.transform;
@@ -41,5 +42,14 @@ public class Spawner : MonoBehaviour {
     {
         mouseOver = false;
         rend.material.color = startColor;
+    }
+    public void damage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+            BuildManager.gameOver = true;
+        }
     }
 }
